@@ -48,4 +48,4 @@ def procesaHTML(pathHTML):
             print ("-------------------------")
         print ("Valor del vuelo final: $" + precio)
         print("==========================")
-procesaHTML("file:///home/nuxion/Projects/vuelos/_files/vuelosDespegar.html")
+procesaHTML("file:///_files/vuelosDespegar.html")

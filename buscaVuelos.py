@@ -10,7 +10,7 @@ import sys
 import pickle 
 # Librerias propias
 from tools.html.saveDocuments import saveHTML
-
+import datetime
 
 def cargaSitio(page,tituloSite,usuario):
     """ En una pagina dada, se carga hasta el final y se baja.
@@ -37,5 +37,19 @@ def cargaSitio(page,tituloSite,usuario):
     saveHTML(driver.page_source, guardaInfo)
     driver.close()
 
-cargaSitio("http://www.despegar.com.ar/shop/flights/results/roundtrip/EZE/RIO/2017-02-13/2017-02-24/1/0/0?from=SB","Despegar","Empty")
+def makeURL(aaaa,mm,dd,dias):
+    baseURL="http://www.despegar.com.ar/shop/flights/results/roundtrip/EZE/RIO/" 
+    otros="/1/0/0?from=SB"
+    fIda= datetime.date(aaaa,mm,dd) 
+    one_day = datetime.timedelta(days=1)
+    fVuelta=fIda + one_day * dias
+    print (baseURL + str(fIda) + "/" + str(fVuelta) + otros)
+
+#cargaSitio("http://www.despegar.com.ar/shop/flights/results/roundtrip/EZE/RIO/2017-02-13/2017-02-24/1/0/0?from=SB","Despegar","Empty") 
+dia = 15
+for salida in 1,2,3,4: 
+    dia = dia + salida
+    makeURL(2017,2,dia,12)
+
+#makeURL(2017,2,20,12)
 
