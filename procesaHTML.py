@@ -8,9 +8,9 @@ import re
 import csv
 from bs4 import BeautifulSoup
 from urllib.request import urlopen 
+import sendgmail
 
-
-def procesaHTML(pathHTML):
+def procesaHTML(pathHTML, uri):
     """ Metodo que recibe el path de un html y extrae nombre de la persona.
     y url del perfil en facebook, devuelve un diccionario o lista.
     Valores `pathHTML`: String, path a nivel filesyste de donde esta el archivo html."""
@@ -32,8 +32,10 @@ def procesaHTML(pathHTML):
         precio=tabla.find('span', {'class':'amount price-amount'}).getText()
 
         enPesos=float(precio)
-        #if enPesos < 9.5:
-        #    print (enPesos)
+        if enPesos < 7.5:
+            print (enPesos) 
+            sendgmail.sendMail(uri)
+
         tripRoute = tabla.find_all('trip-route')
         for x,trip in enumerate(tripRoute):
             #tipo=trip.find('span', {'class':'route-info-item route-info-item-type type'}).getText()
@@ -48,4 +50,4 @@ def procesaHTML(pathHTML):
             print ("-------------------------")
         print ("Valor del vuelo final: $" + precio)
         print("==========================")
-procesaHTML("file:///_files/vuelosDespegar.html")
+#procesaHTML("file:///_files/vuelosDespegar.html", "test")

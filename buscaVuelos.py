@@ -11,8 +11,9 @@ import pickle
 # Librerias propias
 from tools.html.saveDocuments import saveHTML
 import datetime
+import procesaHTML
 
-def cargaSitio(page,tituloSite,usuario):
+def cargaSitio(page,filepath):
     """ En una pagina dada, se carga hasta el final y se baja.
     valores:.
     page: String que tiene la URL a bajar.
@@ -21,7 +22,8 @@ def cargaSitio(page,tituloSite,usuario):
 
     ### INICIALIZANDO VALORES ###
     # Path donde guardara el sitio una vez cargado.
-    guardaInfo = '_files/' + 'vuelos' + tituloSite + '.html'
+    #guardaInfo = '_files/' + 'vuelos' + tituloSite + '.html'
+    guardaInfo = filepath
     # Pagina para hacer el scraping
     paginaUsuarios = page
     userAgent="Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101 Firefox/45.0"
@@ -47,13 +49,16 @@ def makeURL(aaaa,mm,dd,dias):
 
 #cargaSitio("http://www.despegar.com.ar/shop/flights/results/roundtrip/EZE/RIO/2017-02-13/2017-02-24/1/0/0?from=SB","Despegar","Empty") 
 dia = 15
-for salida in 1,2,3,4: 
+for salida in 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15: 
     dia = dia + salida
     url=makeURL(2017,2,dia,12)
     fecha= str(datetime.date(2017,2,dia))
     filepath='_files/vuelos-despegar_' + fecha + '.html'
     print(url)
     print(filepath)
+    cargaSitio(url,filepath)
+    procesaHTML.procesaHTML(filepath, url)
+    time.sleep(10) 
 
 #makeURL(2017,2,20,12)
 
