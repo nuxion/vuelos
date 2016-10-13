@@ -43,13 +43,17 @@ def makeURL(aaaa,mm,dd,dias):
     fIda= datetime.date(aaaa,mm,dd) 
     one_day = datetime.timedelta(days=1)
     fVuelta=fIda + one_day * dias
-    print (baseURL + str(fIda) + "/" + str(fVuelta) + otros)
+    return (baseURL + str(fIda) + "/" + str(fVuelta) + otros)
 
 #cargaSitio("http://www.despegar.com.ar/shop/flights/results/roundtrip/EZE/RIO/2017-02-13/2017-02-24/1/0/0?from=SB","Despegar","Empty") 
 dia = 15
 for salida in 1,2,3,4: 
     dia = dia + salida
-    makeURL(2017,2,dia,12)
+    url=makeURL(2017,2,dia,12)
+    fecha= str(datetime.date(2017,2,dia))
+    filepath='_files/vuelos-despegar_' + fecha + '.html'
+    print(url)
+    print(filepath)
 
 #makeURL(2017,2,20,12)
 
