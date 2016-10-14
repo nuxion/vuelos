@@ -48,8 +48,9 @@ def makeURL(aaaa,mm,dd,dias):
     return (baseURL + str(fIda) + "/" + str(fVuelta) + otros)
 
 #cargaSitio("http://www.despegar.com.ar/shop/flights/results/roundtrip/EZE/RIO/2017-02-13/2017-02-24/1/0/0?from=SB","Despegar","Empty") 
-dia = 15
-for salida in 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15: 
+dia = 6
+for x in range(1, 11): 
+    salida = x + 5
     dia = dia + salida
     url=makeURL(2017,2,dia,12)
     fecha= str(datetime.date(2017,2,dia))
