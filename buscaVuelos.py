@@ -12,6 +12,7 @@ import pickle
 from tools.html.saveDocuments import saveHTML
 import datetime
 import procesaHTML
+import procesaHTML2
 
 def cargaSitio(page,filepath):
     """ En una pagina dada, se carga hasta el final y se baja.
@@ -30,7 +31,8 @@ def cargaSitio(page,filepath):
     # Inicio el navegador          
     dcap = dict(DesiredCapabilities.PHANTOMJS)
     dcap["phantomjs.page.settings.userAgent"] = (userAgent)
-    driver = webdriver.PhantomJS(desired_capabilities=dcap)
+    service_args = ['--proxy=localhost:8080']
+    driver = webdriver.PhantomJS(desired_capabilities=dcap,service_args=service_args)
     # Inicio el navegador
     # Cargo la pagina
     driver.get(paginaUsuarios)
@@ -68,9 +70,10 @@ def flying(fecha, dias, x):
     filepath='_files/vuelos-despegar_' + str(x)+ str(dias) + '.html'
     #print(url)
     print(filepath)
-    #cargaSitio(url,filepath)
+    cargaSitio(url,filepath)
     #procesaHTML.procesaHTML(filepath, url)
-    #time.sleep(10)
+    procesaHTML2.procesaHTML(filepath, url)
+    time.sleep(10)
 
 
 dias = 12
