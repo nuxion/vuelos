@@ -39,28 +39,49 @@ def cargaSitio(page,filepath):
     saveHTML(driver.page_source, guardaInfo)
     driver.close()
 
-def makeURL(dd,dias):
-    baseURL="http://www.despegar.com.ar/shop/flights/results/roundtrip/EZE/RIO/" 
+def makeURL(fecha,dias,iterador):
+    """ Metodo que se encarga de construir la url para buscar los vuelos.
+    Recibe tres parametros
+    `fecha` =  de tipo (string) sera la fecha inicial de partida de viaje. 
+    `dias` =  de tipo (int) son la cantidad de dias que se desea ir de viaje
+    `iterador` = de tipo (int) el incremental para ir cambiando la fecha
+    inicial. """
+    # baseURL, en este caso ya construyo ciudad orig/dst pero en el futuro se
+    # puede modificar. 
+    baseURL="http://www.despegar.com.ar/shop/flights/results/roundtrip/EZE/RIO/"
     otros="/1/0/0?from=SB"
-    # Modificar para que automaticamente vaya sumando
-    fIda= datetime.date(2017,2,dd) 
-    one_day = datetime.timedelta(days=1)
+    # Seteo la fecha inicial
+    format="%Y-%m-%d"
+    fInicial=datetime.datetime.strptime(fecha,format)
+
+    one_day = datetime.timedelta(days=1) # necesario para el delta de la fech
+    fIda= fInicial + one_day * iterador
+    # Seteo la fecha de regreso
     fVuelta=fIda + one_day * dias
-    return (baseURL + str(fIda) + "/" + str(fVuelta) + otros)
+    #return (baseURL + str(fIda) + "/" + str(fVuelta) + otros)
+    return (baseURL + fIda.strftime(format) + "/" + fVuelta.strftime(format) + otros)
 
 #cargaSitio("http://www.despegar.com.ar/shop/flights/results/roundtrip/EZE/RIO/2017-02-13/2017-02-24/1/0/0?from=SB","Despegar","Empty") 
-dia = 19
-for x in range(0, 12): 
-    salida = dia + x + 5
-    #dia = dia + salida
-    url=makeURL(salida,12)
-    #fecha= str(datetime.date(2017,2,dia))
-    filepath='_files/vuelos-despegar_' + str(salida) + '.html'
-    print(url)
-    print(filepath)
-    cargaSitio(url,filepath)
-    procesaHTML.procesaHTML(filepath, url)
-    time.sleep(10) 
 
-#makeURL(2017,2,20,12)
+def flying(fecha, dias, x):
+    url=makeURL(fecha,dias,x)
+    filepath='_files/vuelos-despegar_' + str(x)+ str(dias) + '.html'
+    #print(url)
+    print(filepath)
+    #cargaSitio(url,filepath)
+    #procesaHTML.procesaHTML(filepath, url)
+    #time.sleep(10)
+
+
+dias = 12
+fecha="2017-02-10"
+for x in range(0, 6):
+    flying(fecha, dias, x*7)
+    flying(fecha, dias - 1, x*7)
+    flying(fecha, dias + 1, x*7)
+    for y in range(1,3):
+        flying(fecha, dias, (x*7)+y)
+        flying(fecha, dias -1, (x*7)+y)
+        flying(fecha, dias + 1, (x*7)+y)
+
 
