@@ -42,13 +42,14 @@ def cargaSitio(page,filepath):
 def makeURL(dd,dias):
     baseURL="http://www.despegar.com.ar/shop/flights/results/roundtrip/EZE/RIO/" 
     otros="/1/0/0?from=SB"
+    # Modificar para que automaticamente vaya sumando
     fIda= datetime.date(2017,2,dd) 
     one_day = datetime.timedelta(days=1)
     fVuelta=fIda + one_day * dias
     return (baseURL + str(fIda) + "/" + str(fVuelta) + otros)
 
 #cargaSitio("http://www.despegar.com.ar/shop/flights/results/roundtrip/EZE/RIO/2017-02-13/2017-02-24/1/0/0?from=SB","Despegar","Empty") 
-dia = 6
+dia = 19
 for x in range(0, 12): 
     salida = dia + x + 5
     #dia = dia + salida

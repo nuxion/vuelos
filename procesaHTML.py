@@ -33,7 +33,7 @@ def procesaHTML(pathHTML, uri):
         precio=tabla.find('span', {'class':'amount price-amount'}).getText()
 
         enPesos=float(precio)
-        if enPesos < 7.5:
+        if enPesos < 7:
             print (enPesos) 
             sendgmail.sendMail(uri)
 
