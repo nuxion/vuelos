@@ -39,22 +39,22 @@ def cargaSitio(page,filepath):
     saveHTML(driver.page_source, guardaInfo)
     driver.close()
 
-def makeURL(aaaa,mm,dd,dias):
+def makeURL(dd,dias):
     baseURL="http://www.despegar.com.ar/shop/flights/results/roundtrip/EZE/RIO/" 
     otros="/1/0/0?from=SB"
-    fIda= datetime.date(aaaa,mm,dd) 
+    fIda= datetime.date(2017,2,dd) 
     one_day = datetime.timedelta(days=1)
     fVuelta=fIda + one_day * dias
     return (baseURL + str(fIda) + "/" + str(fVuelta) + otros)
 
 #cargaSitio("http://www.despegar.com.ar/shop/flights/results/roundtrip/EZE/RIO/2017-02-13/2017-02-24/1/0/0?from=SB","Despegar","Empty") 
 dia = 6
-for x in range(1, 11): 
-    salida = x + 5
-    dia = dia + salida
-    url=makeURL(2017,2,dia,12)
-    fecha= str(datetime.date(2017,2,dia))
-    filepath='_files/vuelos-despegar_' + fecha + '.html'
+for x in range(0, 12): 
+    salida = dia + x + 5
+    #dia = dia + salida
+    url=makeURL(salida,12)
+    #fecha= str(datetime.date(2017,2,dia))
+    filepath='_files/vuelos-despegar_' + str(salida) + '.html'
     print(url)
     print(filepath)
     cargaSitio(url,filepath)
